@@ -1,0 +1,9 @@
+[Unit]
+Description=Triggers actions when the battery is low
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/battery_checker
+
+[Install]
+WantedBy=multi-user.target

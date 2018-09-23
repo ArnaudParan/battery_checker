@@ -1,0 +1,11 @@
+#!/usr/bin/bash
+
+logged_graphical_users=$(who|sed "/^.*[^)]$/d")
+
+while read -r line; do
+  user=$(echo "$line"| sed "s/^\(\w\+\).*$/\1/g")
+  uid=$(id -u "$user")
+  display=$(echo "$line"| sed "s/^.*(\(:[^)]\+\))$/\1/g")
+  >&2 echo "notifying user \"$user\" on display: \"$display\""
+  su "$user" <<< "export XDG_RUNTIME_DIR=/run/user/\"$uid\"; export DISPLAY=$display; notify-send $@"
+done <<< "$logged_graphical_users"

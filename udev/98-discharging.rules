@@ -1,0 +1,1 @@
+SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-15]", RUN+="/usr/local/bin/notify-send-all -a battery_checker -u critical 'Low Battery'"

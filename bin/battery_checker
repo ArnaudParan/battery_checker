@@ -1,0 +1,19 @@
+#!/usr/bin/bash
+
+battery_level=$(udevadm info -p /sys/class/power_supply/BAT0 | sed '/POWER_SUPPLY_CAPACITY=/!d; s/^.*=\([0-9]\{1,3\}\)/\1/g')
+warning_level=15
+critical_level=10
+
+warning() {
+    notify-send-all -a battery_checker -u critical 'Low Battery'
+}
+
+critical() {
+    systemctl hibernate
+}
+
+if [ $battery_level -le $critical_level ]; then
+    critical $battery_level
+elif [ $battery_level -le $warning_level ]; then
+    warning $battery_level
+fi

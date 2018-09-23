@@ -1,0 +1,10 @@
+[Unit]
+Description=Triggers actions when the battery is low
+
+[Timer]
+OnCalendar=*:0/1
+Persistent=true
+AccuracySec=30sec
+
+[Install]
+WantedBy=timers.target
